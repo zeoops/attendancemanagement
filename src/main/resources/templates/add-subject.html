@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Home page</title>
+    <meta charset="UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+</head>
+<body>
+<div>
+    <form action="#" th:action="@{/save/subject}" method="post" th:object="${subject}">
+        <label>Subject Name:</label>
+        <input type="text" th:field="*{subjectName}" /><br/>
+        <button type="submit">Add Subject</button>
+    </form>
+</div>
+<br>
+<!--<tr th:each="subject: ${subjects}">-->
+<!--    <td th:text="${subject.subjectName}" />-->
+<!--</tr>-->
+<p>Hey You are here on adding subject page</p>
+</body>
+</html>
