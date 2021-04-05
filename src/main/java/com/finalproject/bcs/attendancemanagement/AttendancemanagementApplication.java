@@ -1,9 +1,14 @@
 package com.finalproject.bcs.attendancemanagement;
 
+import com.finalproject.bcs.attendancemanagement.web.testController;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.context.annotation.ComponentScan;
 
 @SpringBootApplication
+
+@ComponentScan(basePackages = "com.finalproject.bcs.attendancemanagement")
+
 public class AttendancemanagementApplication {
 
 	public static void main(String[] args) {
