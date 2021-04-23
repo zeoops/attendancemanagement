@@ -1,10 +1,26 @@
 <!DOCTYPE html>
-<html lang="en">
+<html xmlns:th="http://www.thymeleaf.org">
 <head>
-    <meta charset="UTF-8">
-    <title>Title</title>
+    <title>Home page</title>
+    <meta charset="UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
 </head>
 <body>
-
+<div>
+    <form action="#" th:action="@{/save/teacher}" method="post" th:object="${teacher}">
+        <label for="firstname">Teacher FirstName:</label>
+        <input type="text" th:field="*{firstName}" id="firstname"/><br/>
+        <label for="lastname">Teacher LastName:</label>
+        <input type="text" th:field="*{lastName}" id="lastname"/><br/>
+        <label for="email">Teacher email:  </label>
+        <input type="text" th:field="*{email}" id="email" /><br/>
+        <button type="submit">Add Teacher</button>
+    </form>
+</div>
+<br>
+<!--<tr th:each="subject: ${subjects}">-->
+<!--    <td th:text="${subject.subjectName}" />-->
+<!--</tr>-->
+<p>Hey You are here on adding subject page</p>
 </body>
 </html>
