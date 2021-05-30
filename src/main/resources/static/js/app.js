@@ -145,7 +145,7 @@ app.controller('attendanceController',function request ($scope,$window,$location
      */
     var sendSnapshotToServer = function sendSnapshotToServer(imgBase64) {
         // $scope.snapshotData = imgBase64;
-
+        var subject=BCS-Prog1
         var attendance={
             image:imgBase64,
             subject:subject
