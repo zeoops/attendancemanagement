@@ -12,6 +12,7 @@ import org.springframework.web.multipart.MultipartFile;
 import java.io.*;
 import java.nio.charset.StandardCharsets;
 import java.util.Base64;
+import java.util.Date;
 import java.util.List;
 
 @Service
@@ -24,8 +25,10 @@ public class AttendanceService {
     StudentRepository studentRepository;
     @Autowired
     SubjectRepository subjectRepository;
+    @Autowired
+    AttendanceReporsitory attendanceReporsitory;
 
-    public String saveImage(String imageString){
+    public String saveImage(String imageString,String subjectId){
 //        byte[] decodedBytes = Base64.getDecoder().decode(imageString);
 
         String student="Unknown Student";
@@ -45,7 +48,16 @@ public class AttendanceService {
                     while ((s = br.readLine()) != null) {
                         System.out.println("line: " + s);
                         if (s.contains("unknown.jpeg")) {
-                            student = "Student is " + s.split(",")[1];
+                            String studentCode= s.split(",")[1];
+                            student = "Student is " + studentCode;
+                            Student studentRecord=studentRepository.getOne(Long.valueOf(studentCode));
+                            if(null!=student){
+                                Attendance attendance=new Attendance();
+                                attendance.setDate(new Date());
+                                attendance.setStudent(studentRecord);
+                                attendance.setSubject(subjectRepository.getOne(Long.valueOf(subjectId)));
+                                attendanceReporsitory.save(attendance);
+                            }
                         }
                     }
                     p.waitFor();
