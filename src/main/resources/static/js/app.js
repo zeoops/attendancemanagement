@@ -144,13 +144,18 @@ app.controller('attendanceController',function request ($scope,$window,$location
      * In this example, we simply store it in the scope for display.
      */
     var sendSnapshotToServer = function sendSnapshotToServer(imgBase64) {
-        $scope.snapshotData = imgBase64;
+        // $scope.snapshotData = imgBase64;
+
+        var attendance={
+            image:imgBase64,
+            subject:subject
+        }
 
         // var url = 'posturl', data = 'parameters',config='contenttype';
 
 
 
-        $http.post("http://localhost:8080/attendance/save/pic", imgBase64).then(function (response) {
+        $http.post("http://localhost:8080/attendance/save/pic", attendance).then(function (response) {
 
 
             $scope.student=response;

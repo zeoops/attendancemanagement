@@ -6,6 +6,7 @@ import com.finalproject.bcs.attendancemanagement.datamodel.Subject;
 import com.finalproject.bcs.attendancemanagement.datamodel.Teacher;
 import com.finalproject.bcs.attendancemanagement.service.AttendanceService;
 import com.finalproject.bcs.attendancemanagement.service.DataEntryService;
+import dto.AttendanceAttempt;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -91,10 +92,10 @@ public class testController {
 
     @PostMapping("/save/pic")
     @ResponseBody
-    public String savePicture(@RequestBody String imageString){
+    public String savePicture(@RequestBody AttendanceAttempt attendanceAttempt){
 
 
-        return attendanceService.saveImage(imageString);
+        return attendanceService.saveImage(attendanceAttempt);
     }
 
     @GetMapping("/get/upload")

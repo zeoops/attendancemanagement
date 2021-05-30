@@ -4,6 +4,7 @@ package com.finalproject.bcs.attendancemanagement.service;
 import com.finalproject.bcs.attendancemanagement.datamodel.*;
 import com.opencsv.bean.CsvToBean;
 import com.opencsv.bean.CsvToBeanBuilder;
+import dto.AttendanceAttempt;
 import org.apache.commons.io.FileUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -28,13 +29,13 @@ public class AttendanceService {
     @Autowired
     AttendanceReporsitory attendanceReporsitory;
 
-    public String saveImage(String imageString,String subjectId){
+    public String saveImage(AttendanceAttempt attendanceAttempt){
 //        byte[] decodedBytes = Base64.getDecoder().decode(imageString);
 
         String student="Unknown Student";
         String partSeparator = ",";
-        if (imageString.contains(partSeparator)) {
-            String encodedImg = imageString.split(partSeparator)[1];
+        if (attendanceAttempt.getFile().contains(partSeparator)) {
+            String encodedImg = attendanceAttempt.getFile().split(partSeparator)[1];
             byte[] decodedImg = Base64.getDecoder().decode(encodedImg.getBytes(StandardCharsets.UTF_8));
             try {
                 FileUtils.writeByteArrayToFile(new File(path+"/unknown/unknown.jpeg"), decodedImg);
@@ -55,7 +56,7 @@ public class AttendanceService {
                                 Attendance attendance=new Attendance();
                                 attendance.setDate(new Date());
                                 attendance.setStudent(studentRecord);
-                                attendance.setSubject(subjectRepository.getOne(Long.valueOf(subjectId)));
+                                attendance.setSubject(subjectRepository.getOne(Long.valueOf(attendanceAttempt.getSubject())));
                                 attendanceReporsitory.save(attendance);
                             }
                         }
