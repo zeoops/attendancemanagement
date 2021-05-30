@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Home page</title>
+    <meta charset="UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.8.2/angular.min.js"></script>
+    <script type="text/javascript" th:src="@{/js/app.js}"></script>
+</head>
+<body ng-app="myApp" ng-controller="teacherController">
+<!--<div>-->
+<!--    <form action="#" th:action="@{/save/subject}" method="post" th:object="${subject}">-->
+<!--        <label>Subject Name:</label>-->
+<!--        <input type="text" th:field="*{subjectName}" /><br/>-->
+<!--        <button type="submit">Add Subject</button>-->
+<!--    </form>-->
+<!--</div>-->
+<button ng-click="addTeacher()">Add Teacher</button>
+<br>
+<tr th:each="teacher: ${teachers}">
+    <button th:attr="ng-click='editTeacher(\''+${teacher.id}+'\');'"><td th:text="${teacher.firstName}"></td>
+    </button>
+</tr>
+<p>Hey You are here on Teacher Page</p>
+</body>
+</html>

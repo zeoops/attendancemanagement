@@ -6,6 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
     <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.8.2/angular.min.js"></script>
     <script type="text/javascript" th:src="@{/js/app.js}"></script>
+    <script type="text/javascript" th:src="@{/js/webcam.js}"></script>
 </head>
 <body ng-app="myApp" ng-controller="indexController">
 <p>
@@ -13,5 +14,8 @@
 </p>
 <button ng-click="subjectPage()">Subject</button>
 <button ng-click="teacherspage()">Teacher</button>
+<button ng-click="studentspage()">Student</button>
+<button ng-click="takeAttendance()">Start</button>
+
 </body>
 </html>

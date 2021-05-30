@@ -1,4 +1,9 @@
 package com.finalproject.bcs.attendancemanagement.datamodel;
+import lombok.*;
+import net.bytebuddy.dynamic.loading.InjectionClassLoader;
+import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;

@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Home page</title>
+    <meta charset="UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+</head>
+<body>
+<div>
+    <form action="#" th:action="@{/save/student}" method="post" th:object="${student}">
+        <label for="firstName">Student FirstName:</label>
+        <input type="text" th:field="*{firstName}" id="firstName" /><br/>
+        <label for="lastName">Student LastName:</label>
+        <input type="text" th:field="*{lastName}" id="lastName" /><br/>
+        <input type="text" th:field="*{imageLocation}" /><br/>
+        <label for="contact">Contact Number:</label>
+        <input type="text" th:field="*{contact}" id="contact"/><br/>
+        <button type="submit">Add Subject</button>
+    </form>
+</div>
+<br>
+<!--<tr th:each="subject: ${subjects}">-->
+<!--    <td th:text="${subject.subjectName}" />-->
+<!--</tr>-->
+<p>Hey You are here on adding student page</p>
+</body>
+</html>

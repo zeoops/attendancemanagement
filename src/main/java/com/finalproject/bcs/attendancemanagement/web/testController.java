@@ -4,6 +4,7 @@ import com.finalproject.bcs.attendancemanagement.datamodel.Student;
 import com.finalproject.bcs.attendancemanagement.datamodel.StudentRepository;
 import com.finalproject.bcs.attendancemanagement.datamodel.Subject;
 import com.finalproject.bcs.attendancemanagement.datamodel.Teacher;
+import com.finalproject.bcs.attendancemanagement.service.AttendanceService;
 import com.finalproject.bcs.attendancemanagement.service.DataEntryService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -12,10 +13,12 @@ import org.springframework.web.bind.annotation.*;
 
 @Controller
 public class testController {
-@Autowired
- StudentRepository studentRepository;
-@Autowired
+    @Autowired StudentRepository studentRepository;
+    @Autowired
     DataEntryService dataEntryService;
+
+    @Autowired
+    AttendanceService attendanceService;
 // @ResponseBody
     @GetMapping("/index")
     public String getIndex(){
@@ -42,14 +45,14 @@ public class testController {
         model.addAttribute("subjects",dataEntryService.getSubjects());
         return "subjects";
     }
-    @GetMapping("/get/studentpage")
-    public String getStudentPag (Model model) {
+    @GetMapping("/get/studentspage")
+    public String getStudentPage (Model model) {
         Student student = new Student();
         model.addAttribute("student", student);
         return "add-student";
     }
     @GetMapping("/get/students")
-    public String getStudentPage(Model model) {
+    public String getStudentPag(Model model) {
         model.addAttribute("students", dataEntryService.getStudent());
         return "students";
 
@@ -79,4 +82,18 @@ public class testController {
         model.addAttribute("teachers",dataEntryService.getTeachers());
         return "teachers";
     }
+    @GetMapping("/get/attendancepage")
+    public  String getAttandancePage (){
+
+        return "attendance-page";
+    }
+
+    @PostMapping("/save/pic")
+    @ResponseBody
+    public String savePicture(@RequestBody String imageString){
+
+
+        return attendanceService.saveImage(imageString);
+    }
+
 }
