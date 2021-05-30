@@ -28,6 +28,13 @@ public class Student implements Serializable {
    private String lastName;
    private String contact;
    private String imageLocation;
-   @OneToMany(targetEntity = Subject.class,cascade = CascadeType.ALL)
-   private List<Subject> subject=new ArrayList<>();
+//   @OneToMany(targetEntity = Subject.class,cascade = CascadeType.ALL)
+//   private List<Subject> subject=new ArrayList<>();
+
+//   @OneToMany(mappedBy = "student")
+//    private List<Attendance> attendances;
+
+    @ManyToOne()
+    @JoinColumn(name="subject_id")
+    private Subject subject;
 }

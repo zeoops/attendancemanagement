@@ -26,6 +26,10 @@ app.controller('indexController', function request($scope,$window, $location,$ht
         var host= $location.host();
         $window.location.href='/attendance/get/attendancepage';
     }
+    $scope.upload = function (){
+        var host= $location.host();
+        $window.location.href='/attendance/get/upload';
+    }
 });
 
 

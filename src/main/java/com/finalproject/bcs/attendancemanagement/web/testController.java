@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 @Controller
 public class testController {
@@ -94,6 +95,21 @@ public class testController {
 
 
         return attendanceService.saveImage(imageString);
+    }
+
+    @GetMapping("/get/upload")
+    public  String getUploadPage (){
+
+        return "upload-students";
+    }
+
+    @PostMapping("/upload/students")
+    @ResponseBody
+    public String uploadSaveStudents(@RequestParam("file") MultipartFile file){
+
+        attendanceService.uploadStudentData(file);
+
+        return "Success";
     }
 
 }

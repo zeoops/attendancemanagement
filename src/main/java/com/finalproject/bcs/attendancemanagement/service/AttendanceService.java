@@ -1,15 +1,18 @@
 package com.finalproject.bcs.attendancemanagement.service;
 
 
+import com.finalproject.bcs.attendancemanagement.datamodel.*;
+import com.opencsv.bean.CsvToBean;
+import com.opencsv.bean.CsvToBeanBuilder;
 import org.apache.commons.io.FileUtils;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
-import java.io.BufferedReader;
-import java.io.File;
-import java.io.IOException;
-import java.io.InputStreamReader;
+import java.io.*;
 import java.nio.charset.StandardCharsets;
 import java.util.Base64;
+import java.util.List;
 
 @Service
 public class AttendanceService {
@@ -17,6 +20,10 @@ public class AttendanceService {
 
     private String path="/home/deeplearning/images";
 
+    @Autowired
+    StudentRepository studentRepository;
+    @Autowired
+    SubjectRepository subjectRepository;
 
     public String saveImage(String imageString){
 //        byte[] decodedBytes = Base64.getDecoder().decode(imageString);
@@ -52,5 +59,30 @@ public class AttendanceService {
         }
 
 return student;
+    }
+
+    public void uploadStudentData(MultipartFile file){
+        try (Reader reader = new BufferedReader(new InputStreamReader(file.getInputStream()))) {
+
+            CsvToBean<StudentRecord> csvToBean = new CsvToBeanBuilder(reader)
+                    .withType(StudentRecord.class)
+                    .withIgnoreLeadingWhiteSpace(true)
+                    .build();
+
+
+            List<StudentRecord> students = csvToBean.parse();
+            String test="";
+
+        for(StudentRecord studentRecord:students){
+            Student student=new Student();
+            Subject subject= subjectRepository.getSubjectBySubjectCode(studentRecord.getSubject());
+            student.setFirstName(studentRecord.getFirstName());
+            student.setLastName(studentRecord.getLastName());
+            student.setSubject(subject);
+            studentRepository.save(student);
+        }
+
+        } catch (Exception ex) {
+        }
     }
 }

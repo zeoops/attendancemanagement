@@ -21,8 +21,8 @@ public class Teacher {
    private String firstName;
    private String lastName;
    private String email;
-    @OneToMany(targetEntity = Subject.class,cascade = CascadeType.ALL)
-   private List<Subject> subject = new ArrayList<>();
+//    @OneToMany(targetEntity = Subject.class,cascade = CascadeType.ALL)
+//   private List<Subject> subject = new ArrayList<>();
 
 
 
