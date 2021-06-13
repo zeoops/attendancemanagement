@@ -27,6 +27,7 @@ public class testController {
 
         return "theme/index";
     }
+    //Test String
 
     @GetMapping("/get/subjectpage")
     public String getSubjectPage(Model model){
