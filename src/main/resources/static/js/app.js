@@ -46,6 +46,62 @@ app.controller('subjectController', function request($scope,$window, $location,$
         var host = $location.host();
         $window.location.href='/attendance/get/subjectpage';
     }
+    // $scope.subjects=[];
+    $http({
+        method: 'GET',
+        url: 'http://localhost:8080/attendance/get/subjects',
+    }).then(function successCallback(response) {
+        $scope.subjects=response.data;
+        // this callback will be called asynchronously
+        // when the response is available
+    }, function errorCallback(response) {
+        debugger
+        // called asynchronously if an error occurs
+        // or server returns response with an error status.
+    });
+
+    $http({
+        method: 'GET',
+        url: 'http://localhost:8080/attendance/get/semester',
+    }).then(function successCallback(response) {
+        $scope.semesters=response.data;
+        // this callback will be called asynchronously
+        // when the response is available
+    }, function errorCallback(response) {
+        debugger
+        // called asynchronously if an error occurs
+        // or server returns response with an error status.
+    });
+
+
+    $scope.subjectName="";
+    $scope.semesterId="";
+    $scope.subjectCode="";
+
+    $scope.addSubject=function (){
+        var data = {
+            subjectName:$scope.subjectName,
+            semesterId:$scope.semesterId.id,
+            subjectCode:$scope.subjectCode
+        }
+        debugger
+        $http({
+            method: 'POST',
+            url: 'http://localhost:8080/attendance/subject',
+            data:data
+        }).then(function successCallback(response) {
+            $scope.subjects=response.data
+            // this callback will be called asynchronously
+            // when the response is available
+        }, function errorCallback(response) {
+            debugger
+            // called asynchronously if an error occurs
+            // or server returns response with an error status.
+        });
+
+
+    }
+
 });
 app.controller('teacherController', function request($scope,$window, $location,$http, $log){
     $scope.addTeacher = function() {

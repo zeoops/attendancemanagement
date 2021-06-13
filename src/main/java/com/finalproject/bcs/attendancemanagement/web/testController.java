@@ -1,17 +1,17 @@
 package com.finalproject.bcs.attendancemanagement.web;
 
-import com.finalproject.bcs.attendancemanagement.datamodel.Student;
-import com.finalproject.bcs.attendancemanagement.datamodel.StudentRepository;
-import com.finalproject.bcs.attendancemanagement.datamodel.Subject;
-import com.finalproject.bcs.attendancemanagement.datamodel.Teacher;
+import com.finalproject.bcs.attendancemanagement.datamodel.*;
 import com.finalproject.bcs.attendancemanagement.service.AttendanceService;
 import com.finalproject.bcs.attendancemanagement.service.DataEntryService;
 import dto.AttendanceAttempt;
+import dto.SubjectDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
+
+import java.util.List;
 
 @Controller
 public class testController {
@@ -42,12 +42,36 @@ public class testController {
         return "theme/subjects";
     }
 
-    @PostMapping("/save/subject")
-    public String saveSubject(Model model, @ModelAttribute("subject") Subject subject){
-        dataEntryService.saveSubject(subject);
-        model.addAttribute("subjects",dataEntryService.getSubjects());
-        return "subjects";
+    @GetMapping("/get/subjects")
+    @ResponseBody
+    public List<Subject> getSubjectsPage(){
+        return dataEntryService.getSubjects();
     }
+
+    @GetMapping("/get/semester")
+    @ResponseBody
+    public List<Semester> getSemeseters(){
+        return dataEntryService.getSemesters();
+    }
+
+//    @PostMapping("/save/subject")
+//    public String saveSubject(Model model, @ModelAttribute("subject") Subject subject){
+//        dataEntryService.saveSubject(subject);
+//        model.addAttribute("subjects",dataEntryService.getSubjects());
+//        return "subjects";
+//    }
+
+    @PostMapping("/subject")
+    @ResponseBody
+    public List<Subject> addSubject(@RequestBody SubjectDTO subject){
+//        dataEntryService.saveSubject(subject);
+//        model.addAttribute("subjects",dataEntryService.getSubjects());
+
+        dataEntryService.saveSubject(subject);
+        return dataEntryService.getSubjects();
+    }
+
+
     @GetMapping("/studentspage")
     public String getStudentPage (Model model) {
         Student student = new Student();

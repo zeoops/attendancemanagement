@@ -75,7 +75,7 @@
 
             <li class="nav-item active">
                 <a class="nav-link" href="#" ng-click="subjectPage()">
-                    <i class="fas fa-fw fa-tachometer-alt"></i>
+                    <i class="fas fa-fw fa-book"></i>
                     <span>Subjects</span></a>
             </li>
             <li class="nav-item">
@@ -84,22 +84,6 @@
                     <span>Insert Students</span></a>
             </li>
 
-
-            <!-- Nav Item - Pages Collapse Menu -->
-            <li class="nav-item">
-                <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseTwo"
-                   aria-expanded="true" aria-controls="collapseTwo">
-                    <i class="fas fa-fw fa-cog"></i>
-                    <span>Components</span>
-                </a>
-                <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
-                    <div class="bg-white py-2 collapse-inner rounded">
-                        <h6 class="collapse-header">Custom Components:</h6>
-                        <a class="collapse-item" href="buttons.html">Buttons</a>
-                        <a class="collapse-item" href="cards.html">Cards</a>
-                    </div>
-                </div>
-            </li>
 
 
             <!-- Divider -->
@@ -159,37 +143,91 @@
 
                 <!-- Page Heading -->
                 <div class="d-sm-flex align-items-center justify-content-between mb-4">
-                    <h1 class="h3 mb-0 text-gray-800">Dashboard</h1>
+                    <h1 class="h3 mb-0 text-gray-800">Subjects</h1>
                     <a href="#" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm"><i
                             class="fas fa-download fa-sm text-white-50"></i> Generate Report</a>
                 </div>
 
                 <!-- Content Row -->
-                <div class="row">
-                    <!-- Content Row -->
-                    <div class="col-xl-3 col-md-6 mb-4">
-                        <div class="card border-left-warning shadow h-100 py-2">
-                            <button ng-click="addSubject()">Add Subject</button>
+                <div class="row card shadow">
+
+                    <!-- Nav Item - Pages Collapse Menu -->
+                    <li class="nav-item" style="list-style-type: none;">
+                        <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#subjectCollapse"
+                           aria-expanded="true" aria-controls="subjectCollapse">
+                            <i class="fas fa-fw fa-book"></i>
+                            <span>Add Subjects</span>
+                        </a>
+                        <div style="margin: 10px 10px 10px 10px" id="subjectCollapse" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
+                            <div class="bg-white py-2 collapse-inner rounded">
+                                <table class="table table-borderless">
+                                    <tr>
+                                        <td>
+                                            <label>Subject Name:</label>
+                                        </td>
+                                        <td>
+                                            <input type="text" id="subjectName" ng-model="subjectName"/><br/>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <label>Semester ID:</label>
+                                        </td>
+                                        <td>
+                                            <select ng-model="semesterId" ng-options="semester.semester for semester in semesters track by semester.id"></select>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <label>Subject Code:</label>
+                                        </td>
+                                        <td>
+                                            <input type="text" id="Subject Code" ng-model="subjectCode"/><br/>
+                                        </td>
+                                    </tr>
+
+    <!--                                <input type="text" id="Semester ID" ng-model="semesterId"/><br/>-->
+                                    <tr>
+                                        <td>
+                                            <Button class="btn-user" ng-click="addSubject()"> Add Subject</Button>
+                                        </td>
+                                    </tr>
+
+                                </table>
+                            </div>
+                        </div>
+                    </li>
+                </div>
+                <div class="row card shadow">
+
+                        <!-- Content Column -->
+                        <div class="col-lg-8">
+
                             <div class="card-body">
                                 <div class="row no-gutters align-items-center">
-                                    <tr th:each="subject: ${subjects}">
-                                        <td th:text="${subject.subjectName}" />
-                                    </tr>
+                                    <div class="card shadow">
+                                        <div class="card-header">
+<!--                                            <h1>Subject</h1>-->
+                                        </div>
+                                        <div class="card-body">
+                                            <table class="table">
+                                                <tr>
+                                                    <th>Subject Name</th>
+                                                    <th>Subject Code</th>
+                                                    <th>Subject Semester</th>
+                                                </tr>
+                                                <tr ng-repeat="subject in subjects">
+                                                    <td>{{subject.subjectName}}</td>
+                                                    <td>{{subject.subjectCode}}</td>
+                                                    <td>{{subject.semester.semester}}</td>
+                                                </tr>
+                                            </table>
+                                        </div>
+                                    </div>
+
                                 </div>
                             </div>
                         </div>
-                    </div>
-
-                    <div class="row">
-
-                        <!-- Content Column -->
-                        <div class="col-lg-6 mb-4">
-
-
-                        </div>
-
-                    </div>
-
                 </div>
                 <!-- /.container-fluid -->
 
