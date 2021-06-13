@@ -1,9 +1,13 @@
 var app = angular.module('myApp', ['webcam']);
 
 app.controller('indexController', function request($scope,$window, $location,$http, $log){
+    $scope.getIndex = function() {
+        var host = $location.host();
+        $window.location.href='/attendance/index';
+    }
     $scope.subjectPage = function() {
         var host = $location.host();
-        $window.location.href='/attendance/get/subjects';
+        $window.location.href='/attendance/subjects';
     }
     $scope.teacherspage = function() {
         var host = $location.host();
@@ -13,6 +17,10 @@ app.controller('indexController', function request($scope,$window, $location,$ht
     $scope.addteacher = function() {
         var host = $location.host();
         $window.location.href='/attendance/get/addteacherpage';
+    }
+    $scope.getStudents = function () {
+        var host = $location.host();
+        $window.location.href='/attendance/students';
     }
     $scope.studentspage = function () {
         var host = $location.host();
@@ -28,7 +36,7 @@ app.controller('indexController', function request($scope,$window, $location,$ht
     }
     $scope.upload = function (){
         var host= $location.host();
-        $window.location.href='/attendance/get/upload';
+        $window.location.href='/attendance/upload';
     }
 });
 

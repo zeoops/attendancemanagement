@@ -25,7 +25,7 @@ public class testController {
     @GetMapping("/index")
     public String getIndex(){
 
-        return "index";
+        return "theme/index";
     }
 
     @GetMapping("/get/subjectpage")
@@ -35,10 +35,10 @@ public class testController {
         return "add-subject";
     }
 
-    @GetMapping("/get/subjects")
+    @GetMapping("/subjects")
     public String getSubjectsPage(Model model){
         model.addAttribute("subjects",dataEntryService.getSubjects());
-        return "subjects";
+        return "theme/subjects";
     }
 
     @PostMapping("/save/subject")
@@ -47,16 +47,16 @@ public class testController {
         model.addAttribute("subjects",dataEntryService.getSubjects());
         return "subjects";
     }
-    @GetMapping("/get/studentspage")
+    @GetMapping("/studentspage")
     public String getStudentPage (Model model) {
         Student student = new Student();
         model.addAttribute("student", student);
         return "add-student";
     }
-    @GetMapping("/get/students")
+    @GetMapping("/students")
     public String getStudentPag(Model model) {
         model.addAttribute("students", dataEntryService.getStudent());
-        return "students";
+        return "theme/students";
 
     }
     @PostMapping("/save/student")
@@ -98,10 +98,10 @@ public class testController {
         return attendanceService.saveImage(attendanceAttempt);
     }
 
-    @GetMapping("/get/upload")
+    @GetMapping("/upload")
     public  String getUploadPage (){
 
-        return "upload-students";
+        return "theme/upload";
     }
 
     @PostMapping("/upload/students")
