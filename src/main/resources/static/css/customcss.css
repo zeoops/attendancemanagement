@@ -9,3 +9,15 @@
     background-color: #5bc0de;
     border-color: #46b8da;
 }
+
+.containerVer {
+    display:flex !important;justify-content:center !important;align-items:center !important;
+}
+
+.vertical-center {
+    margin: 0;
+    position: absolute;
+    top: 50%;
+    -ms-transform: translateY(-50%);
+    transform: translateY(-50%);
+}

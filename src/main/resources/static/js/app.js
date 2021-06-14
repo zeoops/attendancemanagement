@@ -5,6 +5,14 @@ app.controller('indexController', function request($scope,$window, $location,$ht
         var host = $location.host();
         $window.location.href='/attendance/index';
     }
+    $scope.getTeacherView = function() {
+        var host = $location.host();
+        $window.location.href='/attendance/dashboard';
+    }
+    $scope.getStudentView = function() {
+        var host = $location.host();
+        $window.location.href='/attendance/studentview';
+    }
     $scope.subjectPage = function() {
         var host = $location.host();
         $window.location.href='/attendance/subjects';
@@ -38,6 +46,45 @@ app.controller('indexController', function request($scope,$window, $location,$ht
         var host= $location.host();
         $window.location.href='/attendance/upload';
     }
+});
+
+app.controller('landingPageController', function request($scope,$window, $location,$http, $log){
+    $scope.username=""
+    $scope.password=""
+    $scope.hasError=false;
+    $scope.error="";
+    $scope.teacherLogin = function() {
+        // var host = $location.host();
+        // $window.location.href='/attendance/dashboard';
+        var data= {
+            username:$scope.username,
+            password:$scope.password
+        }
+        $http({
+            method: 'POST',
+            url: 'http://localhost:8080/attendance/teacher/login',data,
+        }).then(function successCallback(response) {
+            // $scope.subjects=response.data;
+            if(response.data.message === "SUCCESS"){
+                $window.location.href='/attendance/dashboard';
+            }else{
+                $scope.hasError=true;
+                $scope.error="Incorrect Credentials";
+            }
+
+            // this callback will be called asynchronously
+            // when the response is available
+        }, function errorCallback(response) {
+            // called asynchronously if an error occurs
+            // or server returns response with an error status.
+        });
+    }
+
+    $scope.getStudentView = function() {
+        var host = $location.host();
+        $window.location.href='/attendance/studentview';
+    }
+
 });
 
 

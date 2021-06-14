@@ -4,6 +4,8 @@ import com.finalproject.bcs.attendancemanagement.datamodel.*;
 import com.finalproject.bcs.attendancemanagement.service.AttendanceService;
 import com.finalproject.bcs.attendancemanagement.service.DataEntryService;
 import dto.AttendanceAttempt;
+import dto.LoginDTO;
+import dto.LoginResponse;
 import dto.SubjectDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -25,7 +27,18 @@ public class testController {
     @GetMapping("/index")
     public String getIndex(){
 
-        return "theme/index";
+        return "theme/login";
+    }
+
+    @GetMapping("/dashboard")
+    public String getDashboard(){
+
+        return "theme/indexTeacher";
+    }
+    @GetMapping("/studentview")
+    public String getStudentView(){
+
+        return "theme/indexStudent";
     }
     //Test String
 
@@ -138,6 +151,21 @@ public class testController {
 //        return "theme/subjects";
 //        return "Success";
         return "redirect:/subjects";
+    }
+
+    @PostMapping("/teacher/login")
+    @ResponseBody
+    public LoginResponse teacherLogin(@RequestBody LoginDTO loginDTO){
+        //To be completed here real Auth.
+        LoginResponse loginResponse=new LoginResponse();
+        if(loginDTO.getPassword().isEmpty() || loginDTO.getUsername().isEmpty()){
+            loginResponse.setMessage("ERROR");
+            loginResponse.setStatus("KO");
+        }else{
+            loginResponse.setMessage("SUCCESS");
+            loginResponse.setStatus("OK");
+        }
+        return loginResponse;
     }
 
 }
