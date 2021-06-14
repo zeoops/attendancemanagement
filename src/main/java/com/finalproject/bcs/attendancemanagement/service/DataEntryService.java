@@ -19,6 +19,8 @@ public class DataEntryService {
     StudentRepository studentRepository;
     @Autowired
     SemesterRepository semesterRepository;
+    @Autowired
+    SubjectDatesRepository subjectDatesRepository;
 
     public void saveSubject(SubjectDTO subject){
         Subject subject1=new Subject();
@@ -26,18 +28,19 @@ public class DataEntryService {
         subject1.setSubjectName(subject.getSubjectName());
         Semester semester=semesterRepository.findById(Long.valueOf(subject.getSemesterId())).get();
         subject1.setSemester(semester);
-
-        List<SubjectDates> subjectDates=new ArrayList<>();
+        subject1=subjectRepository.save(subject1);
+//        List<SubjectDates> subjectDates=new ArrayList<>();
         if(subject.getDates().size()>0){
             for(Date date:subject.getDates()){
                 SubjectDates subjectDat=new SubjectDates();
-//                subjectDat.setSubject(subject1);
-                subjectDates.add(subjectDat);
+                subjectDat.setSubject(subject1);
+                subjectDat.setDate(date);
+                subjectDatesRepository.save(subjectDat);
             }
         }
-        subject1.setDates(subjectDates);
+//        subject1.setDates(subjectDates);
 
-        subjectRepository.save(subject1);
+
     }
 
     public List<Subject> getSubjects(){
