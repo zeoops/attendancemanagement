@@ -1,5 +1,6 @@
 package com.finalproject.bcs.attendancemanagement.datamodel;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -7,6 +8,7 @@ import lombok.Setter;
 
 import javax.persistence.*;
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -27,6 +29,10 @@ public class Subject implements Serializable {
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name="semester_id")
     private Semester semester;
+
+    @OneToMany(mappedBy = "subject",fetch = FetchType.EAGER)
+    @JsonManagedReference
+    private List<Student> students=new ArrayList<>();
 
 }
 

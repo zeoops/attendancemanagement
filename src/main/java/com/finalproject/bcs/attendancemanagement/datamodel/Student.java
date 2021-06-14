@@ -1,4 +1,5 @@
 package com.finalproject.bcs.attendancemanagement.datamodel;
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import lombok.*;
 import net.bytebuddy.dynamic.loading.InjectionClassLoader;
 import javax.persistence.*;
@@ -36,5 +37,6 @@ public class Student implements Serializable {
 
     @ManyToOne()
     @JoinColumn(name="subject_id")
+    @JsonBackReference
     private Subject subject;
 }

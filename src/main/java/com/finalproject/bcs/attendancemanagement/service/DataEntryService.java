@@ -38,7 +38,15 @@ public class DataEntryService {
 
     public void saveStudent (Student student) { studentRepository.save(student); }
 
-    public List<Student> getStudent () { return studentRepository.findAll(); }
+    public List<Student> getStudent () {
+//        List<Subject> subjects=subjectRepository.findAll();
+//        for(Subject subject:subjects){
+//            if(subject.getStudents().size()>0){
+//
+//            }
+//        }
+        return studentRepository.findAll();
+    }
 
     public List<Teacher> getTeachers() { return  teacherRepository.findAll();}
 

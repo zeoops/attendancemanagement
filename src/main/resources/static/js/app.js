@@ -73,6 +73,31 @@ app.controller('subjectController', function request($scope,$window, $location,$
         // or server returns response with an error status.
     });
 
+    // $scope.getStudentsData=function (subject){
+    //     var students=subject.students
+    //     var ele=""
+    //     var complete=<td>
+    //         <li className="nav-item" style="list-style-type: none;">
+    //             <a className="nav-link collapsed" href="#" data-toggle="collapse" data-target="#subject"
+    //                aria-expanded="true" aria-controls="subjectCollapse">
+    //                 <i className="fas fa-fw fa-book"></i>
+    //                 <span>Show Students</span>
+    //             </a>
+    //             <div style="margin: 10px 10px 10px 10px" id="subjectCollapse" className="collapse"
+    //                  aria-labelledby="headingTwo" data-parent="#accordionSidebar">
+    //
+    //             </div>
+    //         </li>
+    //     </td>
+    //     angular.forEach(students,function (value){
+    //         this.push(
+    //             <div className="bg-white py-2 collapse-inner rounded">
+    //             </div>
+    //         )
+    //     },ele)
+    //
+    // }
+
 
     $scope.subjectName="";
     $scope.semesterId="";

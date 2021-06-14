@@ -19,7 +19,8 @@
 
     <!-- Custom styles for this template-->
     <link th:href="@{css/sb-admin-2.min.css}" rel="stylesheet">
-    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.8.2/angular.min.js"></script>
+    <script type="text/javascript" th:src="@{/js/angular.js}"></script>
+<!--    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.8.2/angular.min.js"></script>-->
     <script type="text/javascript" th:src="@{/js/app.js}"></script>
     <script type="text/javascript" th:src="@{/js/webcam.js}"></script>
 
@@ -113,30 +114,30 @@
         <!-- Main Content -->
         <div id="content">
 
-            <!-- Topbar -->
-            <nav class="navbar navbar-expand navbar-light bg-white topbar mb-4 static-top shadow">
+<!--            &lt;!&ndash; Topbar &ndash;&gt;-->
+<!--            <nav class="navbar navbar-expand navbar-light bg-white topbar mb-4 static-top shadow">-->
 
-                <!-- Sidebar Toggle (Topbar) -->
-                <button id="sidebarToggleTop" class="btn btn-link d-md-none rounded-circle mr-3">
-                    <i class="fa fa-bars"></i>
-                </button>
+<!--                &lt;!&ndash; Sidebar Toggle (Topbar) &ndash;&gt;-->
+<!--                <button id="sidebarToggleTop" class="btn btn-link d-md-none rounded-circle mr-3">-->
+<!--                    <i class="fa fa-bars"></i>-->
+<!--                </button>-->
 
 
-                <!-- Topbar Navbar -->
-                <ul class="navbar-nav ml-auto">
+<!--                &lt;!&ndash; Topbar Navbar &ndash;&gt;-->
+<!--                <ul class="navbar-nav ml-auto">-->
 
-                    <!-- Nav Item - Search Dropdown (Visible Only XS) -->
-                    <li class="nav-item dropdown no-arrow d-sm-none">
-                        <a class="nav-link dropdown-toggle" href="#" id="searchDropdown" role="button"
-                           data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                            <i class="fas fa-search fa-fw"></i>
-                        </a>
+<!--                    &lt;!&ndash; Nav Item - Search Dropdown (Visible Only XS) &ndash;&gt;-->
+<!--                    <li class="nav-item dropdown no-arrow d-sm-none">-->
+<!--                        <a class="nav-link dropdown-toggle" href="#" id="searchDropdown" role="button"-->
+<!--                           data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">-->
+<!--                            <i class="fas fa-search fa-fw"></i>-->
+<!--                        </a>-->
 
-                        <div class="topbar-divider d-none d-sm-block"></div>
-                </ul>
+<!--                        <div class="topbar-divider d-none d-sm-block"></div>-->
+<!--                </ul>-->
 
-            </nav>
-            <!-- End of Topbar -->
+<!--            </nav>-->
+<!--            &lt;!&ndash; End of Topbar &ndash;&gt;-->
 
             <!-- Begin Page Content -->
             <div class="container-fluid">
@@ -201,10 +202,10 @@
                 <div class="row card shadow">
 
                         <!-- Content Column -->
-                        <div class="col-lg-8">
+                        <div class="col-lg-12">
 
                             <div class="card-body">
-                                <div class="row no-gutters align-items-center">
+                                <div class="row no-gutters align-items-center" style="display: block">
                                     <div class="card shadow">
                                         <div class="card-header">
 <!--                                            <h1>Subject</h1>-->
@@ -215,11 +216,40 @@
                                                     <th>Subject Name</th>
                                                     <th>Subject Code</th>
                                                     <th>Subject Semester</th>
+                                                    <th>Students</th>
+                                                    <th>Attendance Report</th>
                                                 </tr>
                                                 <tr ng-repeat="subject in subjects">
                                                     <td>{{subject.subjectName}}</td>
                                                     <td>{{subject.subjectCode}}</td>
                                                     <td>{{subject.semester.semester}}</td>
+<!--                                                    {{getStudentRecord()}}-->
+                                                    <td>
+                                                        <li className="nav-item" style="list-style-type: none;">
+                                                            <a className="nav-link collapsed" href="#" data-toggle="collapse"
+                                                               ng-attr-data-target="{{'#subject'+subject.id}}"
+                                                               aria-expanded="true" ng-attr-aria-controls="{{'subject'+subject.id}}">
+                                                                <i className="fas fa-fw fa-book"></i>
+                                                                <span>Show Students</span>
+                                                            </a>
+                                                            <div style="margin: 10px 10px 10px 10px" ng-attr-id="{{'subject'+subject.id}}" className="collapse"
+                                                                 aria-labelledby="headingTwo" data-parent="#accordionSidebar">
+                                                                <div>
+                                                                    <table class="table-borderless">
+                                                                        <tr ng-if="subject.students.length>0">
+                                                                            <th>Student Name</th>
+                                                                            <th>Student Contact</th>
+                                                                        </tr>
+                                                                        <tr ng-repeat="student in subject.students">
+                                                                            <td>{{student.firstName + ' '+ student.lastName}}</td>
+                                                                            <td>{{student.contact}}</td>
+                                                                        </tr>
+                                                                    </table>
+                                                                </div>
+                                                            </div>
+                                                        </li>
+                                                    </td>
+                                                    <td>Button For Attendance Report</td>
                                                 </tr>
                                             </table>
                                         </div>
