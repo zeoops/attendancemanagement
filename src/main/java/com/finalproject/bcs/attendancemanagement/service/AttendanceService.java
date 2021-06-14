@@ -74,7 +74,7 @@ public class AttendanceService {
 return student;
     }
 
-    public void uploadStudentData(MultipartFile file){
+    public void uploadStudentData(MultipartFile file,Long SubjectId){
         try (Reader reader = new BufferedReader(new InputStreamReader(file.getInputStream()))) {
 
             CsvToBean<StudentRecord> csvToBean = new CsvToBeanBuilder(reader)
@@ -88,9 +88,10 @@ return student;
 
         for(StudentRecord studentRecord:students){
             Student student=new Student();
-            Subject subject= subjectRepository.getSubjectBySubjectCode(studentRecord.getSubject());
+            Subject subject= subjectRepository.findById(SubjectId).get();
             student.setFirstName(studentRecord.getFirstName());
             student.setLastName(studentRecord.getLastName());
+            student.setContact(studentRecord.getContact());
             student.setSubject(subject);
             studentRepository.save(student);
         }

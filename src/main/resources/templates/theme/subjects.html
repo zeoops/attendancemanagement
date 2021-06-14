@@ -217,6 +217,7 @@
                                                     <th>Subject Code</th>
                                                     <th>Subject Semester</th>
                                                     <th>Students</th>
+                                                    <th>Add Students</th>
                                                     <th>Attendance Report</th>
                                                 </tr>
                                                 <tr ng-repeat="subject in subjects">
@@ -228,7 +229,7 @@
                                                         <li className="nav-item" style="list-style-type: none;">
                                                             <a className="nav-link collapsed" href="#" data-toggle="collapse"
                                                                ng-attr-data-target="{{'#subject'+subject.id}}"
-                                                               aria-expanded="true" ng-attr-aria-controls="{{'subject'+subject.id}}">
+                                                               aria-expanded="false" ng-attr-aria-controls="{{'subject'+subject.id}}">
                                                                 <i className="fas fa-fw fa-book"></i>
                                                                 <span>Show Students</span>
                                                             </a>
@@ -245,6 +246,27 @@
                                                                             <td>{{student.contact}}</td>
                                                                         </tr>
                                                                     </table>
+                                                                </div>
+                                                            </div>
+                                                        </li>
+                                                    </td>
+                                                    <td>
+                                                        <li class="nav-item" style="list-style-type: none;">
+                                                            <a class="nav-link collapsed" href="#" data-toggle="collapse"
+                                                               ng-attr-data-target="{{'#addStudentsCollapse'+subject.id}}"
+                                                               aria-expanded="false" ng-attr-aria-controls="{{'addStudentsCollapse'+subject.id}}">>
+<!--                                                                <i class="fas fa-fw fa-book"></i>-->
+                                                                <span>Add Students</span>
+                                                            </a>
+                                                            <div style="margin: 10px 10px 10px 10px" ng-attr-id="{{'addStudentsCollapse'+subject.id}}" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
+                                                                <div class="bg-white py-2 collapse-inner rounded">
+                                                                    <form method="post" th:action="@{/upload/students}" enctype="multipart/form-data">
+                                                                        <div class="form-group">
+                                                                            <input type="file" name="file" class="form-control-file">
+                                                                            <input type="hidden" name="subject" value="{{subject.id}}">
+                                                                        </div>
+                                                                        <button type="submit" class="btn btn-primary">Upload File</button>
+                                                                    </form>
                                                                 </div>
                                                             </div>
                                                         </li>

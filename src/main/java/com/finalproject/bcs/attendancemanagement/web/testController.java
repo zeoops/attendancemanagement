@@ -130,12 +130,14 @@ public class testController {
     }
 
     @PostMapping("/upload/students")
-    @ResponseBody
-    public String uploadSaveStudents(@RequestParam("file") MultipartFile file){
+//    @ResponseBody
+    public String uploadSaveStudents(@RequestParam("file") MultipartFile file,@RequestParam("subject") Long subjectId,Model model){
 
-        attendanceService.uploadStudentData(file);
-
-        return "Success";
+        attendanceService.uploadStudentData(file,subjectId);
+//        model.addAttribute("subjects",dataEntryService.getSubjects());
+//        return "theme/subjects";
+//        return "Success";
+        return "redirect:/subjects";
     }
 
 }
