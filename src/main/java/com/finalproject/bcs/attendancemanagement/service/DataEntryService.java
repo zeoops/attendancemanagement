@@ -5,6 +5,8 @@ import dto.SubjectDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 @Service
@@ -24,6 +26,17 @@ public class DataEntryService {
         subject1.setSubjectName(subject.getSubjectName());
         Semester semester=semesterRepository.findById(Long.valueOf(subject.getSemesterId())).get();
         subject1.setSemester(semester);
+
+        List<SubjectDates> subjectDates=new ArrayList<>();
+        if(subject.getDates().size()>0){
+            for(Date date:subject.getDates()){
+                SubjectDates subjectDat=new SubjectDates();
+//                subjectDat.setSubject(subject1);
+                subjectDates.add(subjectDat);
+            }
+        }
+        subject1.setDates(subjectDates);
+
         subjectRepository.save(subject1);
     }
 

@@ -1,10 +1,13 @@
 package com.finalproject.bcs.attendancemanagement.datamodel;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.hibernate.annotations.LazyCollection;
+import org.hibernate.annotations.LazyCollectionOption;
 
 import javax.persistence.*;
 import java.io.Serializable;
@@ -33,6 +36,11 @@ public class Subject implements Serializable {
     @OneToMany(mappedBy = "subject",fetch = FetchType.EAGER)
     @JsonManagedReference
     private List<Student> students=new ArrayList<>();
+
+    @OneToMany(mappedBy = "subject")
+    @JsonIgnore
+    @LazyCollection(LazyCollectionOption.FALSE)
+    private List<SubjectDates> dates=new ArrayList<>();
 
 }
 

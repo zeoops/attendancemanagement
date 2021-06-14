@@ -1,4 +1,4 @@
-var app = angular.module('myApp', ['webcam']);
+var app = angular.module('myApp', ['webcam','gm.datepickerMultiSelect','ui.bootstrap']);
 
 app.controller('indexController', function request($scope,$window, $location,$http, $log){
     $scope.getIndex = function() {
@@ -98,16 +98,29 @@ app.controller('subjectController', function request($scope,$window, $location,$
     //
     // }
 
+    $scope.options = {
+        startingDay:1,
+        minDate:new Date(),
+        customClass: function(data) {
+            if($scope.selectedDates.indexOf(data.date.setHours(0, 0, 0, 0)) > -1) {
+                return 'selected';
+            }
+            return '';
+        }
+    }
 
     $scope.subjectName="";
     $scope.semesterId="";
     $scope.subjectCode="";
+    $scope.activeDate="";
+    $scope.selectedDates=[]
 
     $scope.addSubject=function (){
         var data = {
             subjectName:$scope.subjectName,
             semesterId:$scope.semesterId.id,
-            subjectCode:$scope.subjectCode
+            subjectCode:$scope.subjectCode,
+            dates:$scope.selectedDates
         }
         debugger
         $http({
