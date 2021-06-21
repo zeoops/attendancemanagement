@@ -3,10 +3,7 @@ package com.finalproject.bcs.attendancemanagement.web;
 import com.finalproject.bcs.attendancemanagement.datamodel.*;
 import com.finalproject.bcs.attendancemanagement.service.AttendanceService;
 import com.finalproject.bcs.attendancemanagement.service.DataEntryService;
-import dto.AttendanceAttempt;
-import dto.LoginDTO;
-import dto.LoginResponse;
-import dto.SubjectDTO;
+import dto.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -58,7 +55,15 @@ public class testController {
     @GetMapping("/get/subjects")
     @ResponseBody
     public List<Subject> getSubjectsPage(){
+
         return dataEntryService.getSubjects();
+    }
+
+    @GetMapping("/subject/{id}/{month}")
+    public String getSubjectReport(Model model){
+        dataEntryService.getSubjects();
+        model.addAttribute("subjects",dataEntryService.getSubjects());
+        return "theme/subjects";
     }
 
     @GetMapping("/get/semester")
@@ -83,6 +88,8 @@ public class testController {
         dataEntryService.saveSubject(subject);
         return dataEntryService.getSubjects();
     }
+
+
 
 
     @GetMapping("/studentspage")
@@ -122,18 +129,24 @@ public class testController {
         model.addAttribute("teachers",dataEntryService.getTeachers());
         return "teachers";
     }
-    @GetMapping("/get/attendancepage")
-    public  String getAttandancePage (){
-
-        return "attendance-page";
+    @GetMapping("/subject/{subjectId}/attendancepage")
+    public  String getAttandancePage (Model model,@PathVariable("subjectId") String subjectId){
+        model.addAttribute("subjectId",subjectId);
+        return "theme/takeAttendance";
     }
 
     @PostMapping("/save/pic")
     @ResponseBody
-    public String savePicture(@RequestBody AttendanceAttempt attendanceAttempt){
+    public AttendanceResponse savePicture(@RequestBody AttendanceAttempt attendanceAttempt){
 
 
         return attendanceService.saveImage(attendanceAttempt);
+    }
+    @GetMapping("/subjects/today")
+    @ResponseBody
+    public  List<Subject> getTodaySubjects (){
+
+        return dataEntryService.getTodaySubjects();
     }
 
     @GetMapping("/upload")
@@ -141,6 +154,11 @@ public class testController {
 
         return "theme/upload";
     }
+
+//    @GetMapping("/subject/{subjectId}/months")
+//    public List<String> getSubjectMonths(){
+//
+//    }
 
     @PostMapping("/upload/students")
 //    @ResponseBody

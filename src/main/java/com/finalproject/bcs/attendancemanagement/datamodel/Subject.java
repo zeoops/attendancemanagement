@@ -25,8 +25,9 @@ public class Subject implements Serializable {
     @Column(name="id")
     private Long id;
     private String subjectName;
-//    @OneToMany(mappedBy = "subject")
-//    private List<Attendance> attendances;
+    @OneToMany(mappedBy = "subject")
+    @JsonIgnore
+    private List<Attendance> attendances;
     private String subjectCode;
 
     @ManyToOne(fetch = FetchType.EAGER)
@@ -38,7 +39,7 @@ public class Subject implements Serializable {
     private List<Student> students=new ArrayList<>();
 
     @OneToMany(mappedBy = "subject")
-    @JsonIgnore
+//    @JsonIgnore
     @LazyCollection(LazyCollectionOption.FALSE)
     private List<SubjectDates> dates=new ArrayList<>();
 

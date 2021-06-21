@@ -12,13 +12,13 @@
     <title>Attendance Management</title>
 
     <!-- Custom fonts for this template-->
-    <link th:href="@{vendor/fontawesome-free/css/all.min.css}" rel="stylesheet" type="text/css">
+    <link th:href="@{/vendor/fontawesome-free/css/all.min.css}" rel="stylesheet" type="text/css">
     <link
             href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i"
             rel="stylesheet">
 
     <!-- Custom styles for this template-->
-    <link th:href="@{css/sb-admin-2.min.css}" rel="stylesheet">
+    <link th:href="@{/css/sb-admin-2.min.css}" rel="stylesheet">
     <script type="text/javascript" th:src="@{/js/angular.js}"></script>
     <!--    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.8.2/angular.min.js"></script>-->
     <script type="text/javascript" th:src="@{/js/app.js}"></script>
@@ -49,7 +49,7 @@
 
             <!-- Nav Item - Dashboard -->
             <li class="nav-item active">
-                <a class="nav-link" href="#" ng-click="getStudentView()">
+                <a class="nav-link" href="#" ng-click="getIndex()">
                     <i class="fas fa-fw fa-tachometer-alt"></i>
                     <span>Dashboard</span></a>
             </li>
@@ -125,27 +125,19 @@
             <div class="container-fluid">
 
                 <!-- Content Row -->
-                <div class="row">
-
+                <div class="row card shadow">
+                    <input th:type="hidden" th:value="${subjectId}" id="subjectId">
                     <!-- Earnings (Monthly) Card Example -->
-                    <div class="col-xl-3 col-md-6 mb-4" ng-repeat="subject in subjects">
-                        <div class="card border-left-primary shadow h-100 py-2">
-                            <div class="card-body">
-                                <div class="row no-gutters align-items-center">
-                                    <div class="col mr-2">
-                                        <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">
-                                            {{subject.subjectName}}</div>
-                                        <div class="h5 mb-0 font-weight-bold text-gray-800"></div>
-                                    </div>
-                                    <div class="col-auto">
-                                        <i class="fas fa-calendar fa-2x text-gray-300">
-                                            <a class="button button-primar" href="#" ng-click="takeAttendance(subject.id)">
+                    <div ng-app="myApp" ng-controller="attendanceController">
+                        <div>
+                            <webcam channel="channel"
+                                    on-streaming="onSuccess()"
+                                    on-error="onError(err)"
+                                    on-stream="onStream(stream)"></webcam>
+                            <button ng-click="makeSnapshot()">take picture</button>
+                            <canvas id="snapshot" width="300" height="300"></canvas>
 
-                                                <span>Take Attendance</span></a>
-                                        </i>
-                                    </div>
-                                </div>
-                            </div>
+<!--                            <div ng-bind-html="{student}"></div>-->
                         </div>
                     </div>
 
@@ -157,8 +149,7 @@
 
                         <!-- Content Column -->
                         <div class="col-lg-6 mb-4">
-
-
+                            <div >{{response.message}}</div>
                         </div>
 
                     </div>
@@ -192,17 +183,17 @@
 
 
     <!-- Bootstrap core JavaScript-->
-    <script th:src="@{vendor/jquery/jquery.min.js}"></script>
-    <script th:src="@{vendor/bootstrap/js/bootstrap.bundle.min.js}"></script>
+    <script th:src="@{/vendor/jquery/jquery.min.js}"></script>
+    <script th:src="@{/vendor/bootstrap/js/bootstrap.bundle.min.js}"></script>
 
     <!-- Core plugin JavaScript-->
-    <script th:src="@{vendor/jquery-easing/jquery.easing.min.js}"></script>
+    <script th:src="@{/vendor/jquery-easing/jquery.easing.min.js}"></script>
 
     <!-- Custom scripts for all pages-->
-    <script th:src="@{js/sb-admin-2.min.js}"></script>
+    <script th:src="@{/js/sb-admin-2.min.js}"></script>
 
     <!-- Page level plugins -->
-    <script th:src="@{vendor/chart.js/Chart.min.js}"></script>
+    <script th:src="@{/vendor/chart.js/Chart.min.js}"></script>
 
     <!-- Page level custom scripts -->
     <!--    <script th:src="@{js/demo/chart-area-demo.js}"></script>-->

@@ -5,6 +5,7 @@ import com.finalproject.bcs.attendancemanagement.datamodel.*;
 import com.opencsv.bean.CsvToBean;
 import com.opencsv.bean.CsvToBeanBuilder;
 import dto.AttendanceAttempt;
+import dto.AttendanceResponse;
 import org.apache.commons.io.FileUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -29,13 +30,14 @@ public class AttendanceService {
     @Autowired
     AttendanceReporsitory attendanceReporsitory;
 
-    public String saveImage(AttendanceAttempt attendanceAttempt){
+    public AttendanceResponse saveImage(AttendanceAttempt attendanceAttempt){
 //        byte[] decodedBytes = Base64.getDecoder().decode(imageString);
 
         String student="Unknown Student";
+        AttendanceResponse attendanceResponse=new AttendanceResponse();
         String partSeparator = ",";
-        if (attendanceAttempt.getFile().contains(partSeparator)) {
-            String encodedImg = attendanceAttempt.getFile().split(partSeparator)[1];
+        if (attendanceAttempt.getImage().contains(partSeparator)) {
+            String encodedImg = attendanceAttempt.getImage().split(partSeparator)[1];
             byte[] decodedImg = Base64.getDecoder().decode(encodedImg.getBytes(StandardCharsets.UTF_8));
             try {
                 FileUtils.writeByteArrayToFile(new File(path+"/unknown/unknown.jpeg"), decodedImg);
@@ -52,6 +54,9 @@ public class AttendanceService {
                             String studentCode= s.split(",")[1];
                             student = "Student is " + studentCode;
                             Student studentRecord=studentRepository.getOne(Long.valueOf(studentCode));
+                            attendanceResponse.setAttendanceAttempt(true);
+                            attendanceResponse.setStudent(studentRecord.getFirstName()+" "+studentRecord.getLastName());
+                            attendanceResponse.setMessage("Attendance Inserted");
                             if(null!=student){
                                 Attendance attendance=new Attendance();
                                 attendance.setDate(new Date());
@@ -59,19 +64,25 @@ public class AttendanceService {
                                 attendance.setSubject(subjectRepository.getOne(Long.valueOf(attendanceAttempt.getSubject())));
                                 attendanceReporsitory.save(attendance);
                             }
+                        }else{
+                            attendanceResponse.setAttendanceAttempt(true);
+                            attendanceResponse.setMessage("Student not Found");
                         }
                     }
                     p.waitFor();
                     System.out.println ("exit: " + p.exitValue());
                     p.destroy();
-                } catch (Exception e) {}
+                } catch (Exception e) {
+                    attendanceResponse.setAttendanceAttempt(true);
+                    attendanceResponse.setMessage("Student not Found");
+                }
                 
             } catch (IOException e) {
                 e.printStackTrace();
             }
         }
 
-return student;
+return attendanceResponse;
     }
 
     public void uploadStudentData(MultipartFile file,Long SubjectId){

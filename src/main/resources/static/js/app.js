@@ -87,18 +87,60 @@ app.controller('landingPageController', function request($scope,$window, $locati
 
 });
 
+app.controller('studentDashboardController', function request($scope,$window, $location,$http, $log){
+    var subjects=[]
+    $http({
+        method: 'GET',
+        url: 'http://localhost:8080/attendance/subjects/today',
+    }).then(function successCallback(response) {
+        $scope.subjects=response.data;
+        // this callback will be called asynchronously
+        // when the response is available
+    }, function errorCallback(response) {
+        debugger
+        // called asynchronously if an error occurs
+        // or server returns response with an error status.
+    });
 
+    $scope.takeAttendance=function (subjectId){
+        var host = $location.host();
+        $window.location.href='/attendance/subject/'+subjectId+'/attendancepage';
+    }
+
+})
 app.controller('subjectController', function request($scope,$window, $location,$http, $log){
     $scope.addSubject = function() {
         var host = $location.host();
         $window.location.href='/attendance/get/subjectpage';
     }
     // $scope.subjects=[];
+    let subjectData=[]
     $http({
         method: 'GET',
         url: 'http://localhost:8080/attendance/get/subjects',
     }).then(function successCallback(response) {
+        let subjectDates=[]
+        let subjectDate={
+            subject:"",
+            dates:[]
+        }
+
+        // data=response.data.map((item)=>{
+        //     var subjData=[]
+        //     item.dates.map((subjDate)=>{
+        //         var date=new Date(subjDate.date);
+        //         if(subjDate.indexOf(date) !== -1) {
+        //             subjData.add(date.getMonth());
+        //         }
+        //     })
+        //     subjectDate.subject=item.id;
+        //     subjectDate.dates=subjData;
+        //     subjectDates.add(subjectDate);
+        // })
+
+
         $scope.subjects=response.data;
+        // $scope.subjectsData=subjectDates
         // this callback will be called asynchronously
         // when the response is available
     }, function errorCallback(response) {
@@ -187,6 +229,9 @@ app.controller('subjectController', function request($scope,$window, $location,$
 
     }
 
+    $scope.subjectMonth=""
+    // $scope.subjectMonth=""
+
 });
 app.controller('teacherController', function request($scope,$window, $location,$http, $log){
     $scope.addTeacher = function() {
@@ -251,6 +296,8 @@ app.controller('attendanceController',function request ($scope,$window,$location
         // You could do something manually with the stream.
     };
 
+    $scope.attempt=true;
+    $scope.hideCamera=true;
     $scope.makeSnapshot = function() {
         if (_video) {
             var patCanvas = document.querySelector('#snapshot');
@@ -258,6 +305,8 @@ app.controller('attendanceController',function request ($scope,$window,$location
 
             patCanvas.width = _video.width;
             patCanvas.height = _video.height;
+            $scope.attempt=false;
+            $scope.hideCamera=false;
             var ctxPat = patCanvas.getContext('2d');
 
             var idata = getVideoData($scope.patOpts.x, $scope.patOpts.y, $scope.patOpts.w, $scope.patOpts.h);
@@ -292,9 +341,14 @@ app.controller('attendanceController',function request ($scope,$window,$location
      *
      * In this example, we simply store it in the scope for display.
      */
+
+
+    $scope.responseReceived=false;
     var sendSnapshotToServer = function sendSnapshotToServer(imgBase64) {
         // $scope.snapshotData = imgBase64;
-        var subject=BCS-Prog1
+        var subjectId=document.getElementById("subjectId").value
+        debugger
+        var subject=subjectId
         var attendance={
             image:imgBase64,
             subject:subject
@@ -306,11 +360,10 @@ app.controller('attendanceController',function request ($scope,$window,$location
 
         $http.post("http://localhost:8080/attendance/save/pic", attendance).then(function (response) {
 
-
-            $scope.student=response;
+            $scope.response=response.data;
+            $scope.responseReceived=true;
+            $window.alert(response.data.message);
         }, function (response) {
-
-debugger
         });
 
     };

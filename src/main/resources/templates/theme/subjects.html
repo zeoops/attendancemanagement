@@ -284,7 +284,24 @@
                                                             </div>
                                                         </li>
                                                     </td>
-                                                    <td>Button For Attendance Report</td>
+                                                    <td><li class="nav-item" style="list-style-type: none;">
+                                                        <a class="nav-link collapsed" href="#" data-toggle="collapse"
+                                                           ng-attr-data-target="{{'#addStudentsCollapse'+subject.id}}"
+                                                           aria-expanded="false" ng-attr-aria-controls="{{'addStudentsCollapse'+subject.id}}">>
+                                                            <!--                                                                <i class="fas fa-fw fa-book"></i>-->
+                                                            <span>Get Report</span>
+                                                        </a>
+                                                        <div style="margin: 10px 10px 10px 10px" ng-attr-id="{{'addStudentsCollapse'+subject.id}}" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
+                                                            <div class="bg-white py-2 collapse-inner rounded">
+                                                                <form method="post" th:action="@{/upload/students}" enctype="multipart/form-data">
+                                                                    <div class="form-group">
+                                                                        <select ng-model="semesterId" ng-options="semester.semester for semester in semesters track by semester.id"></select>
+                                                                    </div>
+                                                                    <button type="submit" class="btn btn-primary">Upload File</button>
+                                                                </form>
+                                                            </div>
+                                                        </div>
+                                                    </li></td>
                                                 </tr>
                                             </table>
                                         </div>

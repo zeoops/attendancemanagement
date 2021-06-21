@@ -47,6 +47,41 @@ public class DataEntryService {
         return subjectRepository.findAll();
     }
 
+    public List<Subject> getTodaySubjects(){
+        List<Subject> subjects=subjectRepository.findAll();
+        List<Subject> todaySubjects=new ArrayList<>();
+        for(Subject subject:subjects){
+            Date date=new Date();
+            for(SubjectDates subjectDate:subject.getDates()){
+                if(subjectDate.getDate().getMonth() == date.getMonth() && subjectDate.getDate().getDate() == date.getDate()){
+                    todaySubjects.add(subject);
+                }
+            }
+        }
+        return todaySubjects;
+    }
+
+    public void getSubjectReport(String subjectId,String month){
+        Subject subject=subjectRepository.getOne(Long.valueOf(subjectId));
+        List<String> months=new ArrayList<>();
+        String str="";
+        for(SubjectDates subjectDates:subject.getDates()){
+            for(Student student:subject.getStudents()){
+                for(Attendance attendance:student.getAttendances()){
+                    if(subjectDates.getDate().getMonth() == attendance.getDate().getMonth()
+                            && subjectDates.getDate().getDate() ==attendance.getDate().getDate()){
+                        str+="Present ";
+                    }
+                }
+            }
+        }
+//            for(Student student:subject.getStudents()){
+//                for(Attendance attendance:student)
+//            }
+//        subject.
+//        return subjectRepository.findAll();
+    }
+
     public List<Semester> getSemesters(){
         return semesterRepository.findAll();
     }

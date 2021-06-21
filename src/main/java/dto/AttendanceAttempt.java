@@ -12,7 +12,7 @@ import org.springframework.web.multipart.MultipartFile;
 @NoArgsConstructor
 public class AttendanceAttempt {
 
-    private String file;
+    private String image;
     private String subject;
 
 }

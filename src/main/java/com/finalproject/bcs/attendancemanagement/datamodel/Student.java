@@ -1,5 +1,6 @@
 package com.finalproject.bcs.attendancemanagement.datamodel;
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.*;
 import net.bytebuddy.dynamic.loading.InjectionClassLoader;
 import javax.persistence.*;
@@ -32,8 +33,9 @@ public class Student implements Serializable {
 //   @OneToMany(targetEntity = Subject.class,cascade = CascadeType.ALL)
 //   private List<Subject> subject=new ArrayList<>();
 
-//   @OneToMany(mappedBy = "student")
-//    private List<Attendance> attendances;
+   @OneToMany(mappedBy = "student")
+   @JsonIgnore
+   private List<Attendance> attendances;
 
     @ManyToOne()
     @JoinColumn(name="subject_id")
