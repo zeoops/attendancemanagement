@@ -4,10 +4,16 @@ import com.finalproject.bcs.attendancemanagement.datamodel.*;
 import dto.SubjectDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.thymeleaf.util.DateUtils;
 
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
+import java.io.ByteArrayOutputStream;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.io.PrintWriter;
+import java.text.Format;
+import java.text.SimpleDateFormat;
+import java.util.*;
+import java.util.stream.Collectors;
 
 @Service
 public class DataEntryService {
@@ -61,25 +67,68 @@ public class DataEntryService {
         return todaySubjects;
     }
 
-    public void getSubjectReport(String subjectId,String month){
+    public static Date removeTime(Date date) {
+        Calendar cal = Calendar.getInstance();
+        cal.setTime(date);
+        cal.set(Calendar.HOUR_OF_DAY, 0);
+        cal.set(Calendar.MINUTE, 0);
+        cal.set(Calendar.SECOND, 0);
+        cal.set(Calendar.MILLISECOND, 0);
+        return cal.getTime();
+    }
+
+    public void getSubjectReport(String subjectId,PrintWriter writer) throws IOException {
         Subject subject=subjectRepository.getOne(Long.valueOf(subjectId));
         List<String> months=new ArrayList<>();
-        String str="";
+        String column="Student";
+        Date today=new Date();
+        Format formatter = new SimpleDateFormat("dd/MM/yyyy");
+
+        List<SubjectDates> forTodayReport=new ArrayList<>();
+
         for(SubjectDates subjectDates:subject.getDates()){
-            for(Student student:subject.getStudents()){
-                for(Attendance attendance:student.getAttendances()){
-                    if(subjectDates.getDate().getMonth() == attendance.getDate().getMonth()
-                            && subjectDates.getDate().getDate() ==attendance.getDate().getDate()){
-                        str+="Present ";
-                    }
-                }
+            String s = formatter.format(subjectDates.getDate());
+            if(subjectDates.getDate().before(today)){
+                column+=","+s;
+                forTodayReport.add(subjectDates);
             }
         }
-//            for(Student student:subject.getStudents()){
-//                for(Attendance attendance:student)
-//            }
-//        subject.
-//        return subjectRepository.findAll();
+        List<String> students=new ArrayList<>();
+        for(Student student:subject.getStudents()){
+            String studentColumn=student.getFirstName()+" "+student.getLastName();
+            for(SubjectDates subjectDates:forTodayReport){
+                if(existsAttendance(student.getAttendances(),subjectDates.getDate())){
+                    studentColumn+=",Present";
+                }else{
+                    studentColumn+=",Absent";
+                }
+            }
+            students.add(studentColumn);
+        }
+//        ByteArrayOutputStream out = new ByteArrayOutputStream();
+//        FileWriter writer = new FileWriter("C:/tmp/sto1.csv");
+//        ICsvBeanWriter csvWriter = new CsvBeanWriter(response.getWriter(),
+//                CsvPreference.STANDARD_PREFERENCE);
+        writer.write(column);
+        writer.write("\n");
+        for(String student:students){
+            writer.write(student);
+            writer.write("\n");
+        }
+//        writer.close();
+
+
+
+    }
+
+    private Boolean existsAttendance(List<Attendance> attendances,Date date){
+        boolean exists=false;
+        for(Attendance attendance:attendances){
+            if(attendance.getDate().getDate() == date.getDate()){
+                exists=true;
+            }
+        }
+        return exists;
     }
 
     public List<Semester> getSemesters(){

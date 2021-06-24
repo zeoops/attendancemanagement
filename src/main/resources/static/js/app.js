@@ -186,6 +186,29 @@ app.controller('subjectController', function request($scope,$window, $location,$
     //     },ele)
     //
     // }
+$scope.getReport=function (subjectId){
+    $http({
+        method: 'GET',
+        url: 'http://localhost:8080/attendance/subject/'+subjectId,
+    }).then(function successCallback(response) {
+        debugger
+        var anchor = angular.element('<a/>');
+        anchor.attr({
+            href: 'data:attachment/csv;charset=utf-8,' + encodeURI(response.data),
+            target: '_blank',
+            download: 'report.csv'
+        })[0].click();
+        // $scope.subjects=response.data
+        // this callback will be called asynchronously
+        // when the response is available
+    }, function errorCallback(response) {
+        debugger
+        // called asynchronously if an error occurs
+        // or server returns response with an error status.
+    });
+    return d;
+}
+
 
     $scope.options = {
         startingDay:1,

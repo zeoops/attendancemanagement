@@ -10,6 +10,10 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
+import javax.servlet.http.HttpServletResponse;
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
 import java.util.List;
 
 @Controller
@@ -59,11 +63,14 @@ public class testController {
         return dataEntryService.getSubjects();
     }
 
-    @GetMapping("/subject/{id}/{month}")
-    public String getSubjectReport(Model model){
-        dataEntryService.getSubjects();
-        model.addAttribute("subjects",dataEntryService.getSubjects());
-        return "theme/subjects";
+    @GetMapping("/subject/{id}")
+//    @ResponseBody
+    public void getSubjectReport(Model model, @PathVariable("id") String subjectId, HttpServletResponse response) throws IOException {
+        response.setContentType("text/csv");
+        response.setHeader("Content-Disposition", "attachment; file=report.csv");
+        dataEntryService.getSubjectReport(subjectId,response.getWriter()) ;
+//        return dataEntryService.getSubjectReport(subjectId);
+//        return "theme/subjects";
     }
 
     @GetMapping("/get/semester")
