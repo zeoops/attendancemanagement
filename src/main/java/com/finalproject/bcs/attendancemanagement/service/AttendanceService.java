@@ -56,13 +56,18 @@ public class AttendanceService {
                             Student studentRecord=studentRepository.findStudentByFirstName(studentCode);
                             attendanceResponse.setAttendanceAttempt(true);
                             attendanceResponse.setStudent(studentRecord.getFirstName()+" "+studentRecord.getLastName());
-                            attendanceResponse.setMessage("Attendance Inserted");
-                            if(null!=student){
-                                Attendance attendance=new Attendance();
-                                attendance.setDate(new Date());
-                                attendance.setStudent(studentRecord);
-                                attendance.setSubject(subjectRepository.getOne(Long.valueOf(attendanceAttempt.getSubject())));
-                                attendanceReporsitory.save(attendance);
+                            boolean checkAttendanceAlreadyInserted=checkAttendanceExistance(studentRecord.getAttendances());
+                            if(!checkAttendanceAlreadyInserted){
+                                attendanceResponse.setMessage("Attendance Already Registered Once for Student :"+attendanceResponse.getStudent());
+                            }else{
+                                attendanceResponse.setMessage("Attendance Inserted");
+                                if(null!=student){
+                                    Attendance attendance=new Attendance();
+                                    attendance.setDate(new Date());
+                                    attendance.setStudent(studentRecord);
+                                    attendance.setSubject(subjectRepository.getOne(Long.valueOf(attendanceAttempt.getSubject())));
+                                    attendanceReporsitory.save(attendance);
+                                }
                             }
                         }else{
                             attendanceResponse.setAttendanceAttempt(true);
@@ -84,6 +89,18 @@ public class AttendanceService {
 
 return attendanceResponse;
     }
+
+    private boolean checkAttendanceExistance(List<Attendance> studentAttendance){
+        Date today=new Date();
+        boolean attendanceExists=false;
+        for(Attendance attendance:studentAttendance){
+            if(attendance.getDate().getMonth() == today.getMonth() && attendance.getDate().getDate() == today.getDate()){
+                attendanceExists=true;
+            }
+        }
+        return attendanceExists;
+    }
+
 
     public void uploadStudentData(MultipartFile file,Long SubjectId){
         try (Reader reader = new BufferedReader(new InputStreamReader(file.getInputStream()))) {

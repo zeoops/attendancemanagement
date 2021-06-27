@@ -17,7 +17,7 @@ import java.io.IOException;
 import java.util.List;
 
 @Controller
-public class testController {
+public class AttendanceManagementController {
     @Autowired StudentRepository studentRepository;
     @Autowired
     DataEntryService dataEntryService;
@@ -162,10 +162,6 @@ public class testController {
         return "theme/upload";
     }
 
-//    @GetMapping("/subject/{subjectId}/months")
-//    public List<String> getSubjectMonths(){
-//
-//    }
 
     @PostMapping("/upload/students")
 //    @ResponseBody
