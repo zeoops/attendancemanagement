@@ -24,6 +24,9 @@ public class AttendanceManagementController {
 
     @Autowired
     AttendanceService attendanceService;
+
+    @Autowired
+    TeacherRepository teacherRepository;
 // @ResponseBody
     @GetMapping("/index")
     public String getIndex(){
@@ -164,8 +167,15 @@ public class AttendanceManagementController {
             loginResponse.setMessage("ERROR");
             loginResponse.setStatus("KO");
         }else{
-            loginResponse.setMessage("SUCCESS");
-            loginResponse.setStatus("OK");
+            Teacher teacher=teacherRepository.findByUserNameAndPassword(loginDTO.getUsername(),loginDTO.getPassword());
+            if(null != teacher){
+                loginResponse.setMessage("SUCCESS");
+                loginResponse.setStatus("OK");
+            }else{
+                loginResponse.setMessage("ERROR");
+                loginResponse.setStatus("KO");
+            }
+
         }
         return loginResponse;
     }

@@ -23,6 +23,10 @@ public class Teacher {
    private String email;
 //    @OneToMany(targetEntity = Subject.class,cascade = CascadeType.ALL)
 //   private List<Subject> subject = new ArrayList<>();
+    @Column(unique = true)
+    private String userName;
+
+    private String password;
 
 
 
