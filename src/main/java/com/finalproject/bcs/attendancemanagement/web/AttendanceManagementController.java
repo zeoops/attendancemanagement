@@ -32,23 +32,16 @@ public class AttendanceManagementController {
     }
 
     @GetMapping("/dashboard")
-    public String getDashboard(){
-
-        return "theme/indexTeacher";
+    public String getDashboard(Model model){
+        model.addAttribute("subjects",dataEntryService.getSubjects());
+        return "theme/subjects";
     }
     @GetMapping("/studentview")
     public String getStudentView(){
 
         return "theme/indexStudent";
     }
-    //Test String
 
-    @GetMapping("/get/subjectpage")
-    public String getSubjectPage(Model model){
-        Subject subject=new Subject();
-        model.addAttribute("subject",subject);
-        return "add-subject";
-    }
 
     @GetMapping("/subjects")
     public String getSubjectsPage(Model model){
@@ -99,43 +92,31 @@ public class AttendanceManagementController {
 
 
 
-    @GetMapping("/studentspage")
-    public String getStudentPage (Model model) {
-        Student student = new Student();
-        model.addAttribute("student", student);
-        return "add-student";
-    }
     @GetMapping("/students")
     public String getStudentPag(Model model) {
         model.addAttribute("students", dataEntryService.getStudent());
         return "theme/students";
 
     }
-    @PostMapping("/save/student")
-    public String saveStudent(Model model,@ModelAttribute("student") Student student ){
-        dataEntryService.saveStudent(student);
-        model.addAttribute("students",dataEntryService.getStudent());
-        return "students";
-    }
 
-    @GetMapping("/get/teacherpage")
-    public String getTeacherPage(Model model){
-        model.addAttribute("teachers",dataEntryService.getTeachers());
-        return "teachers";
-    }
-    @GetMapping("/get/addteacherpage")
-    public  String getAddteacherpage (Model model){
-        Teacher teacher = new Teacher();
-        model.addAttribute("teacher",teacher);
-        return "add-teacher";
-    }
+//    @GetMapping("/get/teacherpage")
+//    public String getTeacherPage(Model model){
+//        model.addAttribute("teachers",dataEntryService.getTeachers());
+//        return "teachers";
+//    }
+//    @GetMapping("/get/addteacherpage")
+//    public  String getAddteacherpage (Model model){
+//        Teacher teacher = new Teacher();
+//        model.addAttribute("teacher",teacher);
+//        return "add-teacher";
+//    }
 
-    @PostMapping("/save/teacher")
-    public String saveTeacher(Model model, @ModelAttribute("teacher") Teacher teacher){
-        dataEntryService.saveTeacher(teacher);
-        model.addAttribute("teachers",dataEntryService.getTeachers());
-        return "teachers";
-    }
+//    @PostMapping("/save/teacher")
+//    public String saveTeacher(Model model, @ModelAttribute("teacher") Teacher teacher){
+//        dataEntryService.saveTeacher(teacher);
+//        model.addAttribute("teachers",dataEntryService.getTeachers());
+//        return "teachers";
+//    }
     @GetMapping("/subject/{subjectId}/attendancepage")
     public  String getAttandancePage (Model model,@PathVariable("subjectId") String subjectId){
         model.addAttribute("subjectId",subjectId);
