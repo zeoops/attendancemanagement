@@ -57,10 +57,10 @@ public class AttendanceService {
                             attendanceResponse.setAttendanceAttempt(true);
                             attendanceResponse.setStudent(studentRecord.getFirstName()+" "+studentRecord.getLastName());
                             boolean checkAttendanceAlreadyInserted=checkAttendanceExistance(studentRecord.getAttendances());
-                            if(!checkAttendanceAlreadyInserted){
+                            if(checkAttendanceAlreadyInserted){
                                 attendanceResponse.setMessage("Attendance Already Registered Once for Student :"+attendanceResponse.getStudent());
                             }else{
-                                attendanceResponse.setMessage("Attendance Inserted");
+                                attendanceResponse.setMessage("Attendance Inserted for Student :"+attendanceResponse.getStudent());
                                 if(null!=student){
                                     Attendance attendance=new Attendance();
                                     attendance.setDate(new Date());
