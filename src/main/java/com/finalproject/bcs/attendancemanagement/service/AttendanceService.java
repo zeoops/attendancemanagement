@@ -53,7 +53,7 @@ public class AttendanceService {
                         if (s.contains("unknown.jpeg")) {
                             String studentCode= s.split(",")[1];
                             student = "Student is " + studentCode;
-                            Student studentRecord=studentRepository.getOne(Long.valueOf(studentCode));
+                            Student studentRecord=studentRepository.findStudentByFirstName(studentCode);
                             attendanceResponse.setAttendanceAttempt(true);
                             attendanceResponse.setStudent(studentRecord.getFirstName()+" "+studentRecord.getLastName());
                             attendanceResponse.setMessage("Attendance Inserted");
