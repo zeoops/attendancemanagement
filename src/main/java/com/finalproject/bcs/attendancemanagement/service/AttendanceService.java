@@ -53,7 +53,8 @@ public class AttendanceService {
                         if (s.contains("unknown.jpeg")) {
                             String studentCode= s.split(",")[1];
                             student = "Student is " + studentCode;
-                            Student studentRecord=studentRepository.findStudentByFirstName(studentCode);
+                            Subject subject= subjectRepository.getOne(Long.valueOf(attendanceAttempt.getSubject()));
+                            Student studentRecord=studentRepository.findByFirstNameAndSubject(studentCode,subject);
                             attendanceResponse.setAttendanceAttempt(true);
                             attendanceResponse.setStudent(studentRecord.getFirstName()+" "+studentRecord.getLastName());
                             boolean checkAttendanceAlreadyInserted=checkAttendanceExistance(studentRecord.getAttendances());
