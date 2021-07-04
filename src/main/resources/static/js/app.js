@@ -114,11 +114,19 @@ app.controller('subjectController', function request($scope,$window, $location,$
         var host = $location.host();
         $window.location.href='/attendance/get/subjectpage';
     }
+
+    $scope.logout = function() {
+        debugger
+        var host = $location.host();
+        $window.location.href='/attendance/index';
+
+    }
     // $scope.subjects=[];
     let subjectData=[]
+    var teacherId=document.getElementsByName("teacherId")[0].value;
     $http({
         method: 'GET',
-        url: 'http://localhost:8080/attendance/get/subjects',
+        url: 'http://localhost:8080/attendance/get/'+teacherId+'/subjects',
     }).then(function successCallback(response) {
         let subjectDates=[]
         let subjectDate={
@@ -242,6 +250,7 @@ $scope.getReport=function (subjectId){
             url: 'http://localhost:8080/attendance/'+teacherId+'/subject',
             data:data
         }).then(function successCallback(response) {
+           $window.alert("Subject Added Successfully")
             $scope.subjects=response.data
             // this callback will be called asynchronously
             // when the response is available

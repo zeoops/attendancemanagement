@@ -54,11 +54,11 @@ public class AttendanceManagementController {
         return "theme/subjects";
     }
 
-    @GetMapping("/get/subjects")
+    @GetMapping("/get/{teacherId}/subjects")
     @ResponseBody
-    public List<Subject> getSubjectsPage(){
+    public List<Subject> getSubjectsPage(@PathVariable("teacherId") Long Id){
 
-        return dataEntryService.getSubjects();
+        return dataEntryService.getTeacherSubject(Id);
     }
 
     @GetMapping("/subject/{id}")
