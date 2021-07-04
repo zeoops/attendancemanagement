@@ -34,9 +34,10 @@ public class AttendanceManagementController {
         return "theme/login";
     }
 
-    @GetMapping("/dashboard")
-    public String getDashboard(Model model){
-        model.addAttribute("subjects",dataEntryService.getSubjects());
+    @GetMapping("/{teacherId}/dashboard")
+    public String getDashboard(@PathVariable("teacherId") Long teacherId, Model model){
+        model.addAttribute("subjects",dataEntryService.getTeacherSubject(teacherId));
+        model.addAttribute("teacherId",teacherId);
         return "theme/subjects";
     }
     @GetMapping("/studentview")
@@ -46,9 +47,10 @@ public class AttendanceManagementController {
     }
 
 
-    @GetMapping("/subjects")
-    public String getSubjectsPage(Model model){
-        model.addAttribute("subjects",dataEntryService.getSubjects());
+    @GetMapping("/{teacherId}/subjects")
+    public String getSubjectsPage(@PathVariable("teacherId") Long teacherId,Model model){
+        model.addAttribute("subjects",dataEntryService.getTeacherSubject(teacherId));
+        model.addAttribute("teacherId",teacherId);
         return "theme/subjects";
     }
 
@@ -82,14 +84,14 @@ public class AttendanceManagementController {
 //        return "subjects";
 //    }
 
-    @PostMapping("/subject")
+    @PostMapping("/{teacherId}/subject")
     @ResponseBody
-    public List<Subject> addSubject(@RequestBody SubjectDTO subject){
+    public List<Subject> addSubject(@PathVariable("teacherId") Long teacherId,@RequestBody SubjectDTO subject){
 //        dataEntryService.saveSubject(subject);
 //        model.addAttribute("subjects",dataEntryService.getSubjects());
 
-        dataEntryService.saveSubject(subject);
-        return dataEntryService.getSubjects();
+        dataEntryService.saveSubject(teacherId,subject);
+        return dataEntryService.getTeacherSubject(teacherId);
     }
 
 
@@ -151,11 +153,11 @@ public class AttendanceManagementController {
 //    @ResponseBody
     public String uploadSaveStudents(@RequestParam("file") MultipartFile file,@RequestParam("subject") Long subjectId,Model model){
 
-        attendanceService.uploadStudentData(file,subjectId);
+        Long teacherId=attendanceService.uploadStudentData(file,subjectId);
 //        model.addAttribute("subjects",dataEntryService.getSubjects());
 //        return "theme/subjects";
 //        return "Success";
-        return "redirect:/subjects";
+        return "redirect:/"+teacherId+"/subjects";
     }
 
     @PostMapping("/teacher/login")
@@ -171,6 +173,8 @@ public class AttendanceManagementController {
             if(null != teacher){
                 loginResponse.setMessage("SUCCESS");
                 loginResponse.setStatus("OK");
+                loginResponse.setStatus("OK");
+                loginResponse.setTeacherId(teacher.getId());
             }else{
                 loginResponse.setMessage("ERROR");
                 loginResponse.setStatus("KO");

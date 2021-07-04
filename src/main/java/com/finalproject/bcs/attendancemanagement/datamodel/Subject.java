@@ -43,5 +43,10 @@ public class Subject implements Serializable {
     @LazyCollection(LazyCollectionOption.FALSE)
     private List<SubjectDates> dates=new ArrayList<>();
 
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name="teacher_id")
+    @JsonIgnore
+    private Teacher teacher;
+
 }
 

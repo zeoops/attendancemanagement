@@ -66,7 +66,8 @@ app.controller('landingPageController', function request($scope,$window, $locati
         }).then(function successCallback(response) {
             // $scope.subjects=response.data;
             if(response.data.message === "SUCCESS"){
-                $window.location.href='/attendance/dashboard';
+                var teacherId=response.data.teacherId;
+                $window.location.href='/attendance/'+teacherId+'/dashboard';
             }else{
                 $scope.hasError=true;
                 $scope.error="Incorrect Credentials";
@@ -234,10 +235,11 @@ $scope.getReport=function (subjectId){
             subjectCode:$scope.subjectCode,
             dates:$scope.selectedDates
         }
+        var teacherId=document.getElementsByName("teacherId")[0].value;
         debugger
         $http({
             method: 'POST',
-            url: 'http://localhost:8080/attendance/subject',
+            url: 'http://localhost:8080/attendance/'+teacherId+'/subject',
             data:data
         }).then(function successCallback(response) {
             $scope.subjects=response.data

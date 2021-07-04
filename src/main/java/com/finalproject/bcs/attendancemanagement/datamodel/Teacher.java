@@ -1,6 +1,7 @@
 package com.finalproject.bcs.attendancemanagement.datamodel;
 
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.*;
 import net.bytebuddy.dynamic.loading.InjectionClassLoader;
 
@@ -27,6 +28,10 @@ public class Teacher {
     private String userName;
 
     private String password;
+
+    @OneToMany(mappedBy = "teacher")
+    @JsonIgnore
+    private List<Subject> subjects;
 
 
 

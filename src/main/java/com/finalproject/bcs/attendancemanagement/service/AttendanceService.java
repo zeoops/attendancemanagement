@@ -103,7 +103,8 @@ return attendanceResponse;
     }
 
 
-    public void uploadStudentData(MultipartFile file,Long SubjectId){
+    public Long uploadStudentData(MultipartFile file,Long SubjectId){
+       Long teacherId=1L;
         try (Reader reader = new BufferedReader(new InputStreamReader(file.getInputStream()))) {
 
             CsvToBean<StudentRecord> csvToBean = new CsvToBeanBuilder(reader)
@@ -123,9 +124,12 @@ return attendanceResponse;
             student.setContact(studentRecord.getContact());
             student.setSubject(subject);
             studentRepository.save(student);
+            teacherId=subject.getTeacher().getId();
+
         }
 
         } catch (Exception ex) {
         }
+        return teacherId;
     }
 }

@@ -28,12 +28,14 @@ public class DataEntryService {
     @Autowired
     SubjectDatesRepository subjectDatesRepository;
 
-    public void saveSubject(SubjectDTO subject){
+    public void saveSubject(Long teacherId,SubjectDTO subject){
+        Teacher teacher=teacherRepository.getOne(teacherId);
         Subject subject1=new Subject();
         subject1.setSubjectCode(subject.getSubjectCode());
         subject1.setSubjectName(subject.getSubjectName());
         Semester semester=semesterRepository.findById(Long.valueOf(subject.getSemesterId())).get();
         subject1.setSemester(semester);
+        subject1.setTeacher(teacher);
         subject1=subjectRepository.save(subject1);
 //        List<SubjectDates> subjectDates=new ArrayList<>();
         if(subject.getDates().size()>0){
@@ -51,6 +53,12 @@ public class DataEntryService {
 
     public List<Subject> getSubjects(){
         return subjectRepository.findAll();
+    }
+
+    public List<Subject> getTeacherSubject(Long id){
+        Teacher teacher= teacherRepository.getOne(id);
+//        Teacher teach=teacherRepository.findById(id);
+        return teacher.getSubjects();
     }
 
     public List<Subject> getTodaySubjects(){
