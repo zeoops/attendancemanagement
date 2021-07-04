@@ -396,7 +396,14 @@ app.controller('attendanceController',function request ($scope,$window,$location
 
             $scope.response=response.data;
             $scope.responseReceived=true;
-            $window.alert(response.data.message);
+            $scope.message=response.data.message;
+            var modalContent = document.createElement('div');
+            modalContent.innerHTML=$scope.message
+            // document.getElementsById("modelContent").appendChild(modalContent);
+            var parent=document.getElementById("modelContent");
+            parent.appendChild(modalContent);
+            $('#exampleModal').modal('show');
+            // $window.alert(response.data.message);
         }, function (response) {
         });
 
