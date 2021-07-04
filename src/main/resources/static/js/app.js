@@ -401,6 +401,7 @@ app.controller('attendanceController',function request ($scope,$window,$location
             modalContent.innerHTML=$scope.message
             // document.getElementsById("modelContent").appendChild(modalContent);
             var parent=document.getElementById("modelContent");
+            parent.innerHTML=''
             parent.appendChild(modalContent);
             $('#exampleModal').modal('show');
             // $window.alert(response.data.message);
